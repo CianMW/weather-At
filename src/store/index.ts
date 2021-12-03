@@ -1,3 +1,4 @@
+//import dotenv from "dotenv/config"
 import { createStoreHook } from 'react-redux'
 import { AnyAction, applyMiddleware, combineReducers, compose, createStore, Store } from 'redux'
 import thunk from 'redux-thunk'
@@ -7,7 +8,6 @@ import ReduxStore from '../types/ReduxStore'
 import {persistStore, persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import { encryptTransform } from "redux-persist-transform-encrypt"
-//import dotenv from "dotenv/config"
 import IEncrypt from '../types/encrypt'
 import { resolve } from 'dns'
 
@@ -28,7 +28,7 @@ const persistConfig = {
     storage,
     transforms: [
         encryptTransform({
-            secretKey : "asdasdasnpm"
+            secretKey : process.env.REACT_APP_ENCRYPTION_KEY!
         })
     ] 
     }
