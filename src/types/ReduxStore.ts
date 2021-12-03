@@ -1,6 +1,8 @@
 interface ReduxStore {
     locations:{
-        cities: string[]
+
+            currentCity: string
+            homeCity: string
     }
     weather: {
         current: []
