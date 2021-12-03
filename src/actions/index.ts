@@ -14,7 +14,7 @@ export const getWeatherForecastAction = (city:string) => {
       //   type: "TOGGLE_LOADER",
       //   payload: true,
       // });
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_KEY} `);
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=0be461ebd52a7f8c3a0f4835cf8697bc`);
       if (response.ok) {
         const data = await response.json();
         console.log("HERE IS THE FETCHED DATA :", data);
@@ -31,5 +31,22 @@ export const getWeatherForecastAction = (city:string) => {
       } else {
         console.log("ERROR: could not fetch data");
       }
+    };
+  };
+
+export const setCurrentLocationAction = (city:string) => {
+
+    return async (dispatch: Dispatch) => {
+console.log("this is the city", city)
+        await dispatch({
+          type: "SET_CURRENT_LOCATION",
+          payload: city,
+        });
+        // setTimeout(() => {
+        //   dispatch({
+        //     type: "TOGGLE_LOADER",
+        //     payload: false,
+        //   });
+        // }, 1000);
     };
   };
