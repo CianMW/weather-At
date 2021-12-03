@@ -37,7 +37,7 @@ export const getWeatherForecastAction = (city:string) => {
 export const setCurrentLocationAction = (city:string) => {
 
     return async (dispatch: Dispatch) => {
-console.log("this is the city", city)
+console.log("SETTING CURRENT CITY TO :", city)
         await dispatch({
           type: "SET_CURRENT_LOCATION",
           payload: city,
