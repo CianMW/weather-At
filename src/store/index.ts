@@ -41,6 +41,11 @@ const bigReducer = combineReducers({
 const persistedBigReducer = persistReducer(persistConfig, bigReducer)
 
 
-export const configureStore = () => createStore(persistedBigReducer, initialState as any, aComposeFunctionThatAlwaysWorks(applyMiddleware(thunk)))
 
-export const persistor = persistStore(configureStore as any, null)
+ const configureStore = () => { 
+    let store = createStore(persistedBigReducer, initialState as any, aComposeFunctionThatAlwaysWorks(applyMiddleware(thunk))) 
+    const persistor = persistStore(store as any)
+    return {store, persistor} 
+}
+
+export const {store, persistor} = configureStore()
