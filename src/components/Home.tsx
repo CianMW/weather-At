@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<Action, any , any>) => ({
   })
 
 const Home = ({currentWeather, currentCity, getWeatherForecast, setCurrentLocation}:homeProps )=> {
-const [selectedCity, setSelectedCity] = useState<string | []>("glasgow");
+const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
 
   // const getWeather = async () => {
   //     getWeatherForecast(selectedCity as any)
@@ -45,12 +45,15 @@ const [selectedCity, setSelectedCity] = useState<string | []>("glasgow");
   }, [currentCity])
 
     useEffect(() => {
-      setCurrentLocation(selectedCity as any)
+      if (selectedCity.length > 3){
+        setCurrentLocation(selectedCity as any)
+
+      }
        
-    }, [])
+    }, [selectedCity])
     return(
         <>
-        <Button onClick={() => console.log(selectedCity)}>Click here</Button>
+        <Button onClick={() => console.log(currentCity)}>Click here</Button>
         <Container className="mt-5 Main-forecast p-4">
           <Row className="search-location justify-content-between">
             <div>
@@ -65,30 +68,35 @@ const [selectedCity, setSelectedCity] = useState<string | []>("glasgow");
           <Col className="">
         {currentWeather.length === 1 && (currentWeather.map(weather =>
         
-          <Container className="bordered p-3">
-            <Row>
-              <Col sm={4} className="bordered p-0 d-flex-column">
-              <Col sm={6}>
-              <div><img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}/></div>
+          <Container className=" p-3">
+            
+            <Row className="align-items-center">
+              <Col sm={3}>
+              <Col sm={6} md={2} className="d-flex-column">
+              <div ><img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}/></div>
 
+              <div className="d-flex"><h5>{weather.weather[0].description}</h5></div>
               </Col>
-              <Col sm={6} className="current-weather-description mt-1">
-              <div><h6><p>{weather.weather[0].description}</p></h6></div>
-              </Col>
-              </Col>
-              <Col className="bordered d-flex">
-
+              <Col sm={6} md={6} className="d-flex"><span className="mr-2">now:</span><h3>{weather.main.temp}°C</h3></Col>
+                 </Col>
+                 <Col sm={6} md={4}>
               <div className="wrapping-temperature">
-                <Col>
-              <div className="d-flex"><span className="mr-2">now:</span><h3>{weather.main.temp}°C</h3></div>
+              <div className="d-flex-column">
+              <Col className=" d-flex justify-content-between temperatures bordered">
+              <div><h5>Real Feal :</h5></div>
+              <div>{weather.main.feels_like}°C</div>
               </Col>
-              <div>Real Feal: {weather.main.feels_like}°C</div>
               </div>
-              <div>{weather.main.temp_max}</div>
-              <div>{weather.main.temp_min}</div>
-              <div>{weather.main.humidity}</div>
-           
+              <Col className="d-flex justify-content-between temperatures bordered">
+              <div><h5>High/Low: </h5></div>
+              <div>{weather.main.temp_max}/{weather.main.temp_min}</div>
               </Col>
+              <Col className="d-flex justify-content-between temperatures bordered">
+              <div><h5>Current Humidity: </h5></div>
+              <div>{weather.main.humidity}%</div>
+              </Col>
+              </div>
+              </Col > 
             </Row>
             
           
