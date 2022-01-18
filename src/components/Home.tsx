@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { getWeatherForecastAction, setCurrentLocationAction } from "../actions"
 import { IForecast } from "../types/weather"
 import {  ThunkDispatch } from "redux-thunk"
-import {Button, Container, Row, Col, FormControl, Form} from "react-bootstrap"
+import {Button, Container, Row, Col, FormControl, Form, InputGroup} from "react-bootstrap"
 
 
 interface homeProps {
@@ -54,13 +54,25 @@ const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
     return(
         <>
         <Button onClick={() => console.log(currentCity)}>Click here</Button>
-        <Container className="mt-5 Main-forecast p-4">
+
+        {/* test start */}
+        <Row>
+          <Col sm={3} className="p-0 m-0 col-1"></Col>
+          <Col sm={6} className="col-10">
+            {/* inner test */}
+
+        <Container className="mt-5  Main-forecast p-4">
           <Row className="search-location justify-content-between">
             <div>
               <span>home location</span>
             </div>
           <Form className="d-flex search-area">
-        <FormControl type="text" value={selectedCity} onChange={e => setSelectedCity(e.target.value)} placeholder="Search" className="mr-sm-2" />
+            <InputGroup>
+        <FormControl type="text" value={selectedCity} onChange={e => setSelectedCity(e.target.value)} placeholder="Search" className="m-0" />
+        <InputGroup.Text >
+        <i className="bi bi-geo-alt-fill"></i>
+        </InputGroup.Text>
+            </InputGroup>
         </Form>
 
           </Row>
@@ -68,7 +80,7 @@ const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
           <Col className="">
         {currentWeather.length === 1 && (currentWeather.map(weather =>
         
-          <Container className=" p-3">
+          <Container className="p-3">
             
             <Row className="align-items-center">
               <Col sm={3}>
@@ -110,6 +122,16 @@ const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
           </Row>
 
         </Container>
+
+
+
+            {/* inner test end */}
+
+          </Col>
+          <Col sm={3} className="p-0 m-0 col-1"></Col>
+        </Row>
+
+        {/* test end */}
 
         </>
     )
