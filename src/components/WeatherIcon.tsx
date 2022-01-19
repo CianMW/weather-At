@@ -1,5 +1,4 @@
 
-
 interface IProps {
 sunrisePreParse:number;
 sunsetPreParse:number;
@@ -44,55 +43,40 @@ const WeatherIcon = ({sunsetPreParse, sunrisePreParse, weatherCode }:IProps) => 
         521: "rain.svg",
         522: "overcast-rain.svg",
         531: "extreme-rain.svg",
-    }
+        600: "partly-cloudy-day-snow.svg",
+        601: "snow.svg",
+        602: "extreme-day-snow.svg",
+        611: "partly-cloudy-day-sleet.svg",
+        612: "partly-cloudy-day-sleet.svg",
+        613: "partly-cloudy-day-sleet.svg",
+        615: "partly-cloudy-day-sleet.svg",
+        616: "overcast-sleet.svg",
+        620: "partly-cloudy-day-snow.svg",
+        621: "overcast-day-snow.svg",
+        622: "extreme-snow.svg",
+        701: "mist.svg",
+        711: "extreme-smoke.svg",
+        721: "haze.svg",
+        731: "dust-wind.svg",
+        741: "fog.svg",
+        751: "dust-wind.svg",
+        761: "dust-wind.svg",
+        762: "dust-wind.svg",
+        771: "umbrella-wind-alt.svg",
+        781: "tornado.svg",
+        800: "clear-day.svg",
+        801: "partly-cloudy-day.svg",
+        802: "overcast-day.svg",
+        803: "overcast-day.svg",
+        804: "overcast.svg"
+    };
+
+  const weatherAddress =  Object.fromEntries(Object.entries(weatherObject).filter(([key]) => key === weatherCode.toString()));
+
     return(
         <>
-
-Group 6xx: Snow
-ID	Main	Description	Icon
-600	Snow	light snow	 13d
-601	Snow	Snow	 13d
-602	Snow	Heavy snow	 13d
-611	Snow	Sleet	 13d
-612	Snow	Light shower sleet	 13d
-613	Snow	Shower sleet	 13d
-615	Snow	Light rain and snow	 13d
-616	Snow	Rain and snow	 13d
-620	Snow	Light shower snow	 13d
-621	Snow	Shower snow	 13d
-622	Snow	Heavy shower snow	 13d
-Group 7xx: Atmosphere
-ID	Main	Description	Icon
-701	Mist	mist	 50d
-711	Smoke	Smoke	 50d
-721	Haze	Haze	 50d
-731	Dust	sand/ dust whirls	 50d
-741	Fog	fog	 50d
-751	Sand	sand	 50d
-761	Dust	dust	 50d
-762	Ash	volcanic ash	 50d
-771	Squall	squalls	 50d
-781	Tornado	tornado	 50d
-Group 800: Clear
-ID	Main	Description	Icon
-800	Clear	clear sky	 01d
- 01n
-Group 80x: Clouds
-ID	Main	Description	Icon
-801	Clouds	few clouds: 11-25%	 02d
- 02n
-802	Clouds	scattered clouds: 25-50%	 03d
- 03n
-803	Clouds	broken clouds: 51-84%	 04d
- 04n
-804	Clouds	overcast clouds: 85-100%	 04d
- 04n
-
-
-
-
-        
-
+        {console.log("The weather icon", Object.values(weatherAddress)[0])}
+        {weatherCode && <img width="120px" height="120px" src={`/final/${Object.values(weatherAddress)[0]}`}/>}
         </>
     )
 }

@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import { getWeatherForecastAction, setCurrentLocationAction } from "../actions"
 import { IForecast } from "../types/weather"
 import {  ThunkDispatch } from "redux-thunk"
-import {Button, Container, Row, Col, FormControl, Form, InputGroup} from "react-bootstrap"
+import {Button, Container, Row, Col, FormControl, Form, InputGroup, FloatingLabel} from "react-bootstrap"
+import WeatherIcon from "./WeatherIcon"
+import LocationAndTime from "./LocationAndTime"
 
 
 interface homeProps {
@@ -53,22 +55,26 @@ const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
     }, [selectedCity])
     return(
         <>
-        <Button onClick={() => console.log(currentCity)}>Click here</Button>
-
         {/* test start */}
         <Row>
-          <Col sm={3} className="p-0 m-0 col-1"></Col>
-          <Col sm={6} className="col-10">
+          <Col sm={3} className="p-0 m-0"></Col>
+          <Col sm={6} id="weather-column" className="col-12 m-1">
             {/* inner test */}
 
-        <Container className="mt-5  Main-forecast p-4">
+        <Container className="mt-5 rounded Main-forecast p-4">
           <Row className="search-location justify-content-between">
             <div>
               <span>home location</span>
             </div>
           <Form className="d-flex search-area">
-            <InputGroup>
+            <InputGroup className="p-0">
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Weather in ..."
+              className="m-0"
+            >
         <FormControl type="text" value={selectedCity} onChange={e => setSelectedCity(e.target.value)} placeholder="Search" className="m-0" />
+        </FloatingLabel>
         <InputGroup.Text >
         <i className="bi bi-geo-alt-fill"></i>
         </InputGroup.Text>
@@ -77,41 +83,58 @@ const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
 
           </Row>
           <Row>
-          <Col className="">
+          <Col className="p-0">
         {currentWeather.length === 1 && (currentWeather.map(weather =>
         
-          <Container className="p-3">
-            
-            <Row className="align-items-center">
-              <Col sm={3}>
-              <Col sm={6} md={2} className="d-flex-column">
-              <div ><img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}/></div>
-
-              <div className="d-flex"><h5>{weather.weather[0].description}</h5></div>
-              </Col>
-              <Col sm={6} md={6} className="d-flex"><span className="mr-2">now:</span><h3>{weather.main.temp}°C</h3></Col>
-                 </Col>
-                 <Col sm={6} md={4}>
-              <div className="wrapping-temperature">
-              <div className="d-flex-column">
-              <Col className=" d-flex justify-content-between temperatures bordered">
-              <div><h5>Real Feal :</h5></div>
-              <div>{weather.main.feels_like}°C</div>
-              </Col>
-              </div>
-              <Col className="d-flex justify-content-between temperatures bordered">
-              <div><h5>High/Low: </h5></div>
-              <div>{weather.main.temp_max}/{weather.main.temp_min}</div>
-              </Col>
-              <Col className="d-flex justify-content-between temperatures bordered">
-              <div><h5>Current Humidity: </h5></div>
-              <div>{weather.main.humidity}%</div>
-              </Col>
-              </div>
-              </Col > 
-            </Row>
-            
+          <Container id="weather-container" className="p-3">
+  
+              {weather.name && weather.dt && <LocationAndTime location={weather.name} currentTime={weather.dt} /> }
           
+            
+            <Row className="align-items-center ">
+              <Col className="col-6 p-0 d-flex-column border-right">
+              <div >
+                <WeatherIcon sunrisePreParse={weather.sys.sunrise} sunsetPreParse={weather.sys.sunset} weatherCode={weather.weather[0].id} />
+              </div>
+              <div className="d-flex-row justify-content-center "><h5 className="font-weight-bold">{weather.weather[0].description}</h5></div>
+              <div className="d-flex-row justify-content-center "><h5 className="font-weight-bold">{weather.main.temp}°C</h5></div>
+              </Col>
+              <Col className="col-6 p-0 d-flex-column ">
+             <div id="feels-like-container d-flex-row justify-content-left text-nowrap"><p className="m-0 mt-2 font-weight-bold text-center text-nowrap">Feels Like: {weather.main.feels_like}°C</p></div>
+             <Row>
+               <Col className="col-6 p-0 pr-1 border-right border-dark">
+               <span className="text-nowrap">
+                  <img src="/final/thermometer-warmer.svg" width="50px"/>
+                  <span className=" font-weight-bold text-center align-middle text-nowrap">Max</span>
+               </span>
+                <p className="pr-sm-5 pl-2 font-weight-bold text-center text-nowrap">{weather.main.temp_max}°C</p>
+               </Col>
+               <Col className="col-6 p-0 pl-1">
+               <span className="text-nowrap">
+                  <span className=" font-weight-bold text-center align-middle text-nowrap">Min</span>
+                  <img src="/final/thermometer-colder.svg" width="50px"/>
+               </span>
+              <p className="font-weight-bold pl-1 text-center text-nowrap">{weather.main.temp_min}°C</p>
+               </Col>
+             </Row>
+             <Row id="wind-row">
+                 <Col className="d-flex-row">
+               {weather.wind.speed >= 11 ? (
+               <span className="text-bottom">
+                  <img src="/final/windsock.svg"/>
+                  <span className=" font-weight-bold text-center align-bottom text-nowrap">Wind Speed: {weather.wind.speed} m/s</span>
+                </span>
+               ) : (
+                <span className="text-bottom">
+                 <img src="/final/windsock-weak.svg" width="50px"/>
+                <span className=" font-weight-bold text-center align-bottom text-nowrap">Wind:{weather.wind.speed}m/s</span>
+                
+                </span>
+               ) }
+              </Col>               
+             </Row>
+             </Col>
+            </Row>
           </Container>
         
         
@@ -128,7 +151,7 @@ const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
             {/* inner test end */}
 
           </Col>
-          <Col sm={3} className="p-0 m-0 col-1"></Col>
+          <Col sm={3} className="p-0 m-0 "></Col>
         </Row>
 
         {/* test end */}
