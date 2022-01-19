@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux'
+import { weatherKey } from '../EnvSetup';
 require('dotenv').config()
 //import dotenv from "dotenv/config"
 
@@ -7,14 +8,14 @@ export const getWeatherForecastAction = (city:string) => {
     // do fetch stuff
     return async (dispatch: Dispatch) => {
       console.log("THIS IS THE URL", city);
-      console.log("THIS IS THE env", process.env.WEATHER_KEY);
+      console.log("THIS IS THE env", process.env.REACT_APP_WEATHER_KEY);
       
   
       // dispatch({
       //   type: "TOGGLE_LOADER",
       //   payload: true,
       // });
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=0be461ebd52a7f8c3a0f4835cf8697bc`);
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`);
       if (response.ok) {
         const data = await response.json();
         console.log("HERE IS THE FETCHED DATA :", data);
@@ -28,6 +29,16 @@ export const getWeatherForecastAction = (city:string) => {
         //     payload: false,
         //   });
         // }, 1000);
+        const longitude = data.coord.lon
+        const latitude = data.coord.lat
+        console.log("the coordinates", longitude, latitude)
+        const weekForecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}`)
+        if (weekForecastResponse.ok){
+          const weekData = await weekForecastResponse.json();
+          console.log("THE WEEK DATA", weekData)
+        }else {
+          console.log("ERROR: could not fetch further data")
+        }
       } else {
         console.log("ERROR: could not fetch data");
       }
