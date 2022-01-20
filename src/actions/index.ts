@@ -32,10 +32,14 @@ export const getWeatherForecastAction = (city:string) => {
         const longitude = data.coord.lon
         const latitude = data.coord.lat
         console.log("the coordinates", longitude, latitude)
-        const weekForecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}`)
+        const weekForecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`)
         if (weekForecastResponse.ok){
-          const weekData = await weekForecastResponse.json();
-          console.log("THE WEEK DATA", weekData)
+          const forecastData = await weekForecastResponse.json();
+          console.log("THE WEEK DATA", forecastData)
+          await dispatch({
+            type: "SET_FORECAST",
+            payload: forecastData,
+          });
         }else {
           console.log("ERROR: could not fetch further data")
         }

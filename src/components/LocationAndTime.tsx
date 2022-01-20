@@ -15,14 +15,14 @@ let timestr = date.toLocaleTimeString("en-GB").split(":");
     return(   
         <Row className="justify-content-between">
         {console.log("THE DATE:", date)}
-        <Col className="col-4 ">
-        <span className="font-weight-bold border-bottom border-dark">{location}      </span>
+        <Col className="col-4">
+        <span className="fw-bold border-bottom border-2 border-dark">{location}      </span>
         </Col>
         <Col className="col-4 border-bottom ">
-        <span className="font-weight-bold border-bottom border-dark">{timestr[0]}:{timestr[1]}   </span>
+        <span className="fw-bold border-bottom border-2 border-dark">{timestr[0]}:{timestr[1]}   </span>
         </Col>
-        <Col className="col-4 ">
-        <span className="font-weight-bold text-nowrap border-bottom border-dark">{currentDate}</span>
+        <Col className="col-4">
+        <span className="fw-bold text-nowrap border-bottom border-2 border-dark">{currentDate}</span>
         </Col>
         </Row>
         

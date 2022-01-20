@@ -41,3 +41,48 @@
 //     "name": "Melbourne",
 //     "cod": 200
 // }
+
+
+
+
+// SINGLE DAY SAMPLE
+
+// {
+//     "dt": 1642766400,
+//     "sunrise": 1642751619,
+//     "sunset": 1642782571,
+//     "moonrise": 1642796520,
+//     "moonset": 1642758960,
+//     "moon_phase": 0.61,
+//     "temp": {
+//         "day": 277.63,
+//         "min": 273.56,
+//         "max": 278.96,
+//         "night": 275.62,
+//         "eve": 276.91,
+//         "morn": 273.72
+//     },
+//     "feels_like": {
+//         "day": 275.45,
+//         "night": 273.47,
+//         "eve": 275.18,
+//         "morn": 271.85
+//     },
+//     "pressure": 1039,
+//     "humidity": 73,
+//     "dew_point": 273.21,
+//     "wind_speed": 2.66,
+//     "wind_deg": 310,
+//     "wind_gust": 7.34,
+//     "weather": [
+//         {
+//             "id": 801,
+//             "main": "Clouds",
+//             "description": "few clouds",
+//             "icon": "02d"
+//         }
+//     ],
+//     "clouds": 11,
+//     "pop": 0,
+//     "uvi": 0.83
+// }
