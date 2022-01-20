@@ -2,40 +2,49 @@ import { useEffect, useState } from "react"
 import ReduxStore from "../types/ReduxStore"
 import { Action } from "redux"
 import { connect } from 'react-redux'
-import { getWeatherForecastAction, setCurrentLocationAction } from "../actions"
+import { getWeatherForecastAction, setCurrentCoordinatesAction, setCurrentLocationAction } from "../actions"
 import { IDailyForecast, IForecast, IFullForecast, IFutureForecastArray } from "../types/weather"
 import {  ThunkDispatch } from "redux-thunk"
 import {Button, Container, Row, Col, FormControl, Form, InputGroup, FloatingLabel} from "react-bootstrap"
 import WeatherIcon from "./WeatherIcon"
 import LocationAndTime from "./LocationAndTime"
 import DateAndDay from "./DateAndDay"
+import { ICoordinateObject, ICoordinates } from "../types/ActionInterfaces"
 
 
 interface IHomeProps {
   currentWeather: IForecast[]
   currentCity: string;
   weekForecast: IFullForecast[];
-  getWeatherForecast: (c:string) => void
+  coordinates: ICoordinates;
+  getWeatherForecast: (c:string|null, x:ICoordinates|null) => void
   setCurrentLocation: (c:string) => void
+  setCurrentCoordinates: (c:ICoordinateObject) => void
 }
+
+
 
 const mapStateToProps = (state: ReduxStore) => ({
     currentWeather: state.weather.current,
    currentCity: state.locations.currentCity,
+   coordinates: state.locations.coordinates,
    weekForecast: state.weather.forecast
   })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<Action, any , any>) => ({
-    getWeatherForecast: (city:string ) => {
-      dispatch(getWeatherForecastAction(city))
+    getWeatherForecast: (city:string|null, coordinates:ICoordinates|null ) => {
+      dispatch(getWeatherForecastAction(city, coordinates))
     },
     setCurrentLocation: (city:string ) => {
       dispatch(setCurrentLocationAction(city))
     },
+    setCurrentCoordinates: (coordinates:ICoordinateObject ) => {
+      dispatch(setCurrentCoordinatesAction(coordinates))
+    },
   })
 
   
-  const Home = ({currentWeather, currentCity, getWeatherForecast, setCurrentLocation, weekForecast}:IHomeProps )=> {
+  const Home = ({currentWeather, currentCity, getWeatherForecast, setCurrentLocation, setCurrentCoordinates, coordinates, weekForecast}:IHomeProps )=> {
     const [selectedCity, setSelectedCity] = useState<string | []>(currentCity);
     
     // const getWeather = async () => {
@@ -45,10 +54,15 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<Action, any , any>) => ({
       
       //   } 
       
-    
     useEffect(() => {
-      getWeatherForecast(currentCity)
+      getWeatherForecast(null, coordinates)
+  }, [coordinates])
+
+    useEffect(() => {
+      getWeatherForecast(currentCity, null)
   }, [currentCity])
+    
+
 
     useEffect(() => {
       if (selectedCity.length > 3){
@@ -63,7 +77,14 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<Action, any , any>) => ({
       if (navigator.geolocation) {
        navigator.geolocation.watchPosition(
          (position: any) => {
-           console.log(position);
+           console.log("THE COORDINATES",position.coords.longitude);
+           let coordinates = {
+             coordinates:{
+               longitude: position.coords.longitude,
+               latitude: position.coords.latitude
+             }
+           }
+           setCurrentCoordinates(coordinates)
          }
        )
     }

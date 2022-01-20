@@ -8,6 +8,11 @@ const locationReducer = (state = initialState.locations, action: AnyAction) => {
         ...state,
         currentCity: action.payload,
       }
+        case 'SET_CURRENT_COORDINATES':
+      return {
+        ...state,
+        coordinates: action.payload,
+      }
       default:
         return state
     }
