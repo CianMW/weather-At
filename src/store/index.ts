@@ -11,6 +11,7 @@ import { encryptTransform } from "redux-persist-transform-encrypt"
 import IEncrypt from '../types/encrypt'
 import { resolve } from 'dns'
 import { IForecast } from '../types/weather'
+require('dotenv').config()
 
 
 const aComposeFunctionThatAlwaysWorks = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -20,9 +21,14 @@ export const initialState: ReduxStore = {
     locations:{
             currentCity: "",
             homeCity: "",
+            coordinates: {
+                longitude: "",
+                latitude: ""
+            }
     },
     weather: {
-        current: []
+        current: [],
+        forecast: []
     } 
 }
 const persistConfig = {
@@ -30,8 +36,7 @@ const persistConfig = {
     storage,
     transforms: [
         encryptTransform({
-            secretKey : "insertSecretKey" 
-            //process.env.REACT_APP_ENCRYPTION_KEY!
+            secretKey : process.env.REACT_APP_ENCRYPTION_KEY!
         })
     ] 
     }
