@@ -14,7 +14,7 @@ import { IForecast } from '../types/weather'
 require('dotenv').config()
 
 
-const aComposeFunctionThatAlwaysWorks = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const aComposeFunctionThatAlwaysWorks = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__&& (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 export const initialState: ReduxStore = {
