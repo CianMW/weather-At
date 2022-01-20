@@ -21,6 +21,10 @@ export const initialState: ReduxStore = {
     locations:{
             currentCity: "",
             homeCity: "",
+            coordinates: {
+                longitude: "",
+                latitude: ""
+            }
     },
     weather: {
         current: [],

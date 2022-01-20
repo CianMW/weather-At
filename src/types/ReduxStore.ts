@@ -3,6 +3,10 @@ interface ReduxStore {
 
             currentCity: string;
             homeCity: string;
+            coordinates: {
+                longitude: string;
+                latitude: string
+            }
     }
     weather: {
         current: [];
