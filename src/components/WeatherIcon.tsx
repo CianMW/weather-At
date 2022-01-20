@@ -1,8 +1,9 @@
 
 interface IProps {
-sunrisePreParse:number;
-sunsetPreParse:number;
+sunrisePreParse?:number;
+sunsetPreParse?:number;
 weatherCode:number;
+daily?: true | false
 }
 
 interface IWeatherObject {
@@ -10,9 +11,9 @@ interface IWeatherObject {
 }
 
 
-const WeatherIcon = ({sunsetPreParse, sunrisePreParse, weatherCode }:IProps) => {
+const WeatherIcon = ({sunsetPreParse, sunrisePreParse, weatherCode, daily }:IProps) => {
     
-
+    const size = daily ? "40px" : "120px"
     const weatherObject = {
         200:"thunderstorms-day-rain.svg",
         201: "thunderstorms-extreme-rain.svg",
@@ -76,7 +77,7 @@ const WeatherIcon = ({sunsetPreParse, sunrisePreParse, weatherCode }:IProps) => 
     return(
         <>
         {console.log("The weather icon", Object.values(weatherAddress)[0])}
-        {weatherCode && <img width="120px" height="120px" src={`/final/${Object.values(weatherAddress)[0]}`}/>}
+        {weatherCode && <img width={size} height={size} src={`/final/${Object.values(weatherAddress)[0]}`}/>}
         </>
     )
 }

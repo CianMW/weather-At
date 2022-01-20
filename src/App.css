@@ -37,7 +37,7 @@
   }
 }
 
-.total-cover {
+/* .total-cover {
   background: rgb(255, 255, 255);
   background: -moz-linear-gradient(
     0deg,
@@ -74,7 +74,7 @@
   height: 100vh;
   width: 100vw;
   background-repeat: no-repeat;
-}
+} */
 .Main-forecast {
   background: rgb(255, 255, 255);
   background: -moz-linear-gradient(
@@ -118,4 +118,11 @@
 .sideNavButton{
   font-size: 50px;
   color: white
+}
+
+
+.main-title{
+  font-family: 'Lobster', cursive;
+  font-size:  40px;
+  color:white;
 }

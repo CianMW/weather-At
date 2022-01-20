@@ -23,7 +23,8 @@ export const initialState: ReduxStore = {
             homeCity: "",
     },
     weather: {
-        current: []
+        current: [],
+        forecast: []
     } 
 }
 const persistConfig = {

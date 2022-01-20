@@ -8,6 +8,11 @@ const weatherReducer = (state = initialState.locations, action: AnyAction) => {
         ...state,
         current: [action.payload],
       }
+      case "SET_FORECAST":
+        return {
+          ...state,
+          forecast: [action.payload]
+        }
 
       default:
         return state

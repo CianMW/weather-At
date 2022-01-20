@@ -1,11 +1,12 @@
 interface ReduxStore {
     locations:{
 
-            currentCity: string
-            homeCity: string
+            currentCity: string;
+            homeCity: string;
     }
     weather: {
-        current: []
+        current: [];
+        forecast: [];
     } 
 }
 
